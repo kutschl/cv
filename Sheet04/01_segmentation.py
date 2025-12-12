@@ -10,7 +10,7 @@ np.set_printoptions(suppress=True)
 img = cv.imread('data/img_mosaic.tif')
 print('image_type:', img.dtype)
 print('image_shape:', img.shape)
-
+cv.imwrite('data/img_mosaic.png', img)
 # filtering and resize 
 img = cv.resize(img, (0,0), fx=0.5, fy=0.5, interpolation=cv.INTER_AREA)
 img = cv.bilateralFilter(img, 9, 75, 75)
@@ -37,5 +37,6 @@ cv.imwrite('data/img_mosaic_segment.png', roof_mask)
 # export display result
 img_canny = cv.Canny(roof_mask, 100,200)
 img_canny = cv.morphologyEx(img_canny, cv.MORPH_CLOSE, (7,7)) 
+img_canny = cv.bitwise_not(img_canny)
 cv.imwrite('data/img_mosaic_segment_display.png', img_canny)
 
